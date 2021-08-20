@@ -1,0 +1,15 @@
+{
+  "main": "io.github.emilyydev.chatregexfilter.ChatRegexFilterPlugin",
+  "name": "ChatRegexFilter",
+  "version": "${version}",
+  "author": "emilyy-dev",
+  "website": "https://github.com/emilyy-dev/chat-regex-filter",
+  "api-version": "1.13",
+  "commands": {
+    "chatregexfilter": {
+      "aliases": [
+        "crf"
+      ]
+    }
+  }
+}

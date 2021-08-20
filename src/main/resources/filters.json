@@ -1,0 +1,30 @@
+[
+  {
+    "pattern": "(?i:fu?ck(?:i?ng?)?)",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:cunt)",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:(?: |^)cum(?: |$))",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:raped?|rapi(?:st|ng))",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:pa?edo(?:phil(?:e|ia))?)",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:(?: |^)fagg?(?:ot)?(?: |$))",
+    "replacement": "~~~~"
+  },
+  {
+    "pattern": "(?i:nigg(?:a|er)?)",
+    "replacement": "~~~~"
+  }
+]
