@@ -45,7 +45,7 @@ license {
 }
 
 tasks {
-    build { dependsOn(licenseMain) }
+    check { finalizedBy(licenseMain) }
 
     compileJava {
         options.encoding = Charsets.UTF_8.name()

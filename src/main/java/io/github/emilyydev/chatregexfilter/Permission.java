@@ -21,7 +21,24 @@ package io.github.emilyydev.chatregexfilter;
 
 public interface Permission {
 
-  String BYPASS_PERMISSION = "chatregexfilter.bypass";
-  String COMMAND_PERMISSION = "chatregexfilter.command";
-  String NOTIFY_PERMISSION = "chatregexfilter.notify";
+  /**
+   * Players with this permission will be ignored by the plugin filters.
+   */
+  String BYPASS = permission("bypass");
+
+  /**
+   * Grants access to the plugin's command.
+   */
+  String COMMAND = permission("command");
+
+  /**
+   * Players with this permission will receive a chat message when a player's message
+   * had contents filtered. They will receive the banned word(s) in question
+   * and the original message.
+   */
+  String NOTIFY = permission("notify");
+
+  private static String permission(final String node) {
+    return "chatregexfilter.".concat(node);
+  }
 }

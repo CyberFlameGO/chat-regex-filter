@@ -1,30 +1,33 @@
-[
-  {
-    "pattern": "(?i:fu?ck(?:i?ng?)?)",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:cunt)",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:(?: |^)cum(?: |$))",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:raped?|rapi(?:st|ng))",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:pa?edo(?:phil(?:e|ia))?)",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:(?: |^)fagg?(?:ot)?(?: |$))",
-    "replacement": "~~~~"
-  },
-  {
-    "pattern": "(?i:nigg(?:a|er)?)",
-    "replacement": "~~~~"
-  }
-]
+{
+  "case-insensitive": true,
+  "filters": [
+    {
+      "pattern": "fu?ck(i?ng?)?",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "cunt",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "( |^)cum(ming?)( |$)",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "raped?|rapi(st|ng)",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "pa?edo(phil(e|ia))?",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "( |^)fagg?(ot)?( |$)",
+      "replacement": "~~~~"
+    },
+    {
+      "pattern": "nigg(a|er)?",
+      "replacement": "~~~~"
+    }
+  ]
+}

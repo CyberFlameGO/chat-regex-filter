@@ -22,12 +22,12 @@ package io.github.emilyydev.chatregexfilter.config;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class ConfigEntry {
+public final class FilterEntry {
 
   private final Pattern pattern;
   private final String replacement;
 
-  public ConfigEntry(final Pattern pattern, final String replacement) {
+  public FilterEntry(final Pattern pattern, final String replacement) {
     this.pattern = pattern;
     this.replacement = replacement;
   }
@@ -44,7 +44,7 @@ public final class ConfigEntry {
   public boolean equals(final Object other) {
     if (other == this) { return true; }
     if (other == null || other.getClass() != this.getClass()) { return false; }
-    final ConfigEntry that = (ConfigEntry) other;
+    final FilterEntry that = (FilterEntry) other;
     return Objects.equals(this.pattern, that.pattern) &&
            Objects.equals(this.replacement, that.replacement);
   }
@@ -56,7 +56,7 @@ public final class ConfigEntry {
 
   @Override
   public String toString() {
-    return "ConfigEntry["
+    return "FilterEntry["
            + "pattern=" + this.pattern + ", "
            + "replacement=" + this.replacement
            + ']';

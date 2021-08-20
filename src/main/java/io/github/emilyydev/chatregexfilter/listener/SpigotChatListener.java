@@ -21,17 +21,18 @@ package io.github.emilyydev.chatregexfilter.listener;
 
 import io.github.emilyydev.chatregexfilter.ChatRegexFilterPlugin;
 import io.github.emilyydev.chatregexfilter.Permission;
+import io.github.emilyydev.chatregexfilter.config.FilterEntry;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 final class SpigotChatListener extends ChatListener {
 
-  private Map<Pattern, String> filters = Map.of();
+  private Set<FilterEntry> filters = Set.of();
 
   SpigotChatListener(final ChatRegexFilterPlugin plugin) {
     super(plugin);
@@ -48,20 +49,20 @@ final class SpigotChatListener extends ChatListener {
   }
 
   private void asyncPlayerChat(final AsyncPlayerChatEvent event) {
-    if (event.getPlayer().hasPermission(Permission.BYPASS_PERMISSION)) {
+    if (event.getPlayer().hasPermission(Permission.BYPASS)) {
       return;
     }
 
-    final Map<Pattern, String> filters = this.filters;
+    final Set<FilterEntry> filters = this.filters;
     final Map<String, String> groupToPatternMap = new LinkedHashMap<>();
     final String originalMessage = event.getMessage();
 
     String message = originalMessage;
-    for (final Map.Entry<Pattern, String> entry : filters.entrySet()) {
-      final Matcher matcher = entry.getKey().matcher(message);
+    for (final FilterEntry entry : filters) {
+      final Matcher matcher = entry.pattern().matcher(message);
       if (matcher.find()) {
-        message = matcher.replaceAll(entry.getValue());
-        groupToPatternMap.put(entry.getValue(), entry.getKey().pattern());
+        message = matcher.replaceAll(entry.replacement());
+        groupToPatternMap.put(entry.replacement(), entry.pattern().pattern());
       }
     }
 

@@ -73,11 +73,11 @@ public abstract class ChatListener {
 
     if (groupToPatternMap.size() == 1) {
       final Map.Entry<String, String> entry = groupToPatternMap.entrySet().iterator().next();
-      this.plugin.getServer().broadcast(single(player, entry.getKey(), entry.getValue()), Permission.NOTIFY_PERMISSION);
+      this.plugin.getServer().broadcast(single(player, entry.getKey(), entry.getValue()), Permission.NOTIFY);
     } else {
-      this.plugin.getServer().broadcast(multiple(player, groupToPatternMap), Permission.NOTIFY_PERMISSION);
+      this.plugin.getServer().broadcast(multiple(player, groupToPatternMap), Permission.NOTIFY);
     }
 
-    this.plugin.getServer().broadcast(original(message), Permission.NOTIFY_PERMISSION);
+    this.plugin.getServer().broadcast(original(message), Permission.NOTIFY);
   }
 }

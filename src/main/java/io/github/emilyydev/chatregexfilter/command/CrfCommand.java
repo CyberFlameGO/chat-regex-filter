@@ -56,7 +56,7 @@ public final class CrfCommand implements TabExecutor {
       command.setExecutor(this);
       command.setTabCompleter(this);
       command.setUsage("/<command> notify (on|off|toggle) —— /<command> reloadconfig");
-      command.setPermission(Permission.COMMAND_PERMISSION);
+      command.setPermission(Permission.COMMAND);
     }
   }
 
@@ -65,7 +65,7 @@ public final class CrfCommand implements TabExecutor {
   }
 
   private void setNotify(final CommandSender sender, final boolean value) {
-    final boolean currentValue = sender.hasPermission(Permission.NOTIFY_PERMISSION);
+    final boolean currentValue = sender.hasPermission(Permission.NOTIFY);
 
     if (value && currentValue) {
       sender.sendMessage("You already have the notify permission");
@@ -73,7 +73,7 @@ public final class CrfCommand implements TabExecutor {
       sender.sendMessage("You do not have the notify permission");
     } else {
       final PermissionAttachment attachment = this.attachmentMap.computeIfAbsent(sender, this::createAttachment);
-      attachment.setPermission(Permission.NOTIFY_PERMISSION, value);
+      attachment.setPermission(Permission.NOTIFY, value);
       final char c = value ? 'w' : 't';
       sender.sendMessage("You will no" + c + " be notified of filtered messages");
     }
@@ -110,7 +110,7 @@ public final class CrfCommand implements TabExecutor {
     } else if ("off".equalsIgnoreCase(notify)) {
       setNotify(sender, false);
     } else if ("toggle".equalsIgnoreCase(notify)) {
-      setNotify(sender, !sender.hasPermission(Permission.NOTIFY_PERMISSION));
+      setNotify(sender, !sender.hasPermission(Permission.NOTIFY));
     } else {
       return false;
     }

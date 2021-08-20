@@ -63,13 +63,13 @@ final class ModernPaperChatListener extends ChatListener {
 
   @Override
   public void loadReplacements() {
-    this.replacementConfigs = this.plugin.getFilters().entrySet().stream()
+    this.replacementConfigs = this.plugin.getFilters().stream()
                                          .map(entry -> TextReplacementConfig
                                              .builder()
-                                             .match(entry.getKey())
+                                             .match(entry.pattern())
                                              .replacement((matchResult, builder) -> {
-                                               this.currentGroupToPatternMap.get().put(matchResult.group(), entry.getKey().pattern());
-                                               return builder.content(entry.getKey().matcher(builder.content()).replaceAll(entry.getValue()));
+                                               this.currentGroupToPatternMap.get().put(matchResult.group(), entry.pattern().pattern());
+                                               return builder.content(entry.pattern().matcher(builder.content()).replaceAll(entry.replacement()));
                                              })
                                              .build())
                                          .collect(toUnmodifiableSet());
@@ -81,7 +81,7 @@ final class ModernPaperChatListener extends ChatListener {
   }
 
   private void asyncChat(final AsyncChatEvent event) {
-    if (event.getPlayer().hasPermission(Permission.BYPASS_PERMISSION)) {
+    if (event.getPlayer().hasPermission(Permission.BYPASS)) {
       return;
     }
 

@@ -28,9 +28,14 @@ import java.util.regex.Pattern;
 
 public final class PatternTypeAdapter extends TypeAdapter<Pattern> {
 
-  public static final TypeAdapter<Pattern> INSTANCE = new PatternTypeAdapter().nullSafe();
+  public static final TypeAdapter<Pattern> CASE_SENSITIVE = new PatternTypeAdapter(true).nullSafe();
+  public static final TypeAdapter<Pattern> CASE_INSENSITIVE = new PatternTypeAdapter(false).nullSafe();
 
-  private PatternTypeAdapter() { }
+  private final boolean caseSensitive;
+
+  private PatternTypeAdapter(final boolean caseSensitive) {
+    this.caseSensitive = caseSensitive;
+  }
 
   @Override
   public void write(final JsonWriter out, final Pattern value) throws IOException {
@@ -39,6 +44,6 @@ public final class PatternTypeAdapter extends TypeAdapter<Pattern> {
 
   @Override
   public Pattern read(final JsonReader in) throws IOException {
-    return Pattern.compile(in.nextString());
+    return this.caseSensitive ? Pattern.compile(in.nextString()) : Pattern.compile(in.nextString(), Pattern.CASE_INSENSITIVE);
   }
 }

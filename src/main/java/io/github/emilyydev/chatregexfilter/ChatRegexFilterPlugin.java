@@ -19,12 +19,13 @@
 
 package io.github.emilyydev.chatregexfilter;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
 import io.github.emilyydev.chatregexfilter.command.CrfCommand;
-import io.github.emilyydev.chatregexfilter.config.ConfigEntry;
-import io.github.emilyydev.chatregexfilter.config.PatternTypeAdapter;
+import io.github.emilyydev.chatregexfilter.config.ConfigFile;
+import io.github.emilyydev.chatregexfilter.config.FilterEntry;
 import io.github.emilyydev.chatregexfilter.listener.ChatListener;
 import io.github.emilyydev.chatregexfilter.util.ThrowingRunnable;
 import org.bukkit.event.Event;
@@ -38,22 +39,17 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.regex.Pattern;
-
-import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public final class ChatRegexFilterPlugin extends JavaPlugin implements Listener {
 
-  public static final Gson GSON = new GsonBuilder()
-      .registerTypeHierarchyAdapter(Pattern.class, PatternTypeAdapter.INSTANCE)
+  private static final Gson GSON = new GsonBuilder()
+      .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
       .create();
-  private static final TypeToken<Set<ConfigEntry>> FILTERS_TYPE = new TypeToken<>() { };
 
-  private Map<Pattern, String> filters = Map.of();
+  private ConfigFile configFile = new ConfigFile(true, new JsonArray());
   private final Path pluginFolder = getDataFolder().toPath();
   private final Path filtersFile = this.pluginFolder.resolve("filters.json");
   private final ChatListener chatListener = ChatListener.platformApplicable(this);
@@ -81,16 +77,15 @@ public final class ChatRegexFilterPlugin extends JavaPlugin implements Listener 
     this.crfCommand.register();
   }
 
-  public @Unmodifiable Map<Pattern, String> getFilters() {
-    return this.filters;
+  public @Unmodifiable Set<FilterEntry> getFilters() {
+    return this.configFile.filters();
   }
 
   @Override
   public void reloadConfig() {
     ThrowingRunnable.sneaky(() -> {
       try (final Reader reader = Files.newBufferedReader(this.filtersFile)) {
-        final Set<ConfigEntry> configEntries = GSON.fromJson(reader, FILTERS_TYPE.getType());
-        this.filters = configEntries.stream().collect(toUnmodifiableMap(ConfigEntry::pattern, ConfigEntry::replacement));
+        this.configFile = GSON.fromJson(reader, ConfigFile.class);
       }
 
       this.chatListener.loadReplacements();
