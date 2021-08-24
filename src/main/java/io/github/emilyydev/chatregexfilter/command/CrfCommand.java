@@ -104,6 +104,10 @@ public final class CrfCommand implements TabExecutor {
       return false;
     }
 
+    if (args.length != 2) {
+      return false;
+    }
+
     final String notify = args[1];
     if ("on".equalsIgnoreCase(notify)) {
       setNotify(sender, true);
